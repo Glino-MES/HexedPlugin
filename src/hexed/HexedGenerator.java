@@ -34,7 +34,7 @@ public class HexedGenerator implements Cons<Tiles>{
         {Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine},
         {Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine},
         {Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.stoneWall},
-        {Blocks.stoneWall, Blocks.saltWall}
+        {Blocks.stoneWall, Blocks.saltWall,Blocks.stoneWall, Blocks.saltWall,Blocks.stoneWall, Blocks.saltWall}
     };
 
     @Override
