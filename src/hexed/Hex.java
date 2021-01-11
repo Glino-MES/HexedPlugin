@@ -13,6 +13,7 @@ import java.util.*;
 
 import static mindustry.Vars.*;
 
+
 public class Hex{
     private float[] progress = new float[256];
 
