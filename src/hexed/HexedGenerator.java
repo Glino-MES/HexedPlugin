@@ -22,11 +22,11 @@ public class HexedGenerator implements Cons<Tiles>{
     // |
     // v
     Block[][] floors = {
-        {Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.grass},
-        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.grass, Blocks.grass},
-        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.grass, Blocks.shale},
-        {Blocks.darksandTaintedWater, Blocks.darksandTaintedWater, Blocks.moss, Blocks.moss, Blocks.sporeMoss, Blocks.stone},
-        {Blocks.ice, Blocks.iceSnow, Blocks.snow, Blocks.dacite, Blocks.hotrock, Blocks.salt}
+        {Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.darksandTaintedWater},
+        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater},
+        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater},
+        {Blocks.darksandTaintedWater, Blocks.darksandTaintedWater, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.hotrock},
+        {Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.hotrock, Blocks.hotrock, Blocks.hotrock}
     };
 
     Block[][] blocks = {
@@ -34,7 +34,7 @@ public class HexedGenerator implements Cons<Tiles>{
         {Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine},
         {Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine},
         {Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.stoneWall},
-        {Blocks.iceWall, Blocks.snowWall, Blocks.snowWall, Blocks.snowWall, Blocks.stoneWall, Blocks.saltWall}
+        {Blocks.stoneWall, Blocks.saltWall}
     };
 
     @Override
@@ -110,8 +110,6 @@ public class HexedGenerator implements Cons<Tiles>{
                         else if(floor == Blocks.shale) wall = Blocks.shaleBoulder;
                         else if(floor == Blocks.darksand) wall = Blocks.boulder;
                         else if(floor == Blocks.moss) wall = Blocks.sporeCluster;
-                        else if(floor == Blocks.ice) wall = Blocks.snowBoulder;
-                        else if(floor == Blocks.snow) wall = Blocks.snowBoulder;
                     }
                 }
                 tile.setBlock(wall);

@@ -12,6 +12,7 @@ import mindustry.world.blocks.storage.*;
 import java.util.*;
 
 import static mindustry.Vars.*;
+Vars.state.rules.modeName = "Hex"
 
 public class Hex{
     private float[] progress = new float[256];
