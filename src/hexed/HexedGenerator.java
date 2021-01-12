@@ -22,11 +22,11 @@ public class HexedGenerator implements Cons<Tiles>{
     // |
     // v
     Block[][] floors = {
-        {Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.darksandTaintedWater},
-        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater},
-        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater},
+        {Blocks.sand, Blocks.darksandTaintedWater, Blocks.darksand, Blocks.sand, Blocks.hotrock, Blocks.darksandTaintedWater},
+        {Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.hotrock, Blocks.darksandTaintedWater},
+        {Blocks.darksandWater, Blocks.hotrock, Blocks.darksand, Blocks.sand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater},
         {Blocks.darksandTaintedWater, Blocks.darksandTaintedWater, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.hotrock},
-        {Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.hotrock, Blocks.hotrock, Blocks.hotrock}
+        {Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.darksandTaintedWater, Blocks.darksandTaintedWater, Blocks.hotrock}
     };
 
     Block[][] blocks = {
