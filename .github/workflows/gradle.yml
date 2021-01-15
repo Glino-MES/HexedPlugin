@@ -20,8 +20,8 @@ jobs:
     - name: Upload built jar file
       uses: actions/upload-artifact@v2
       with:
-        name: hexPlugin.jar
-        path: build/libs/hexPlugin.jar
+        name: HexedPlugin_pub.jar
+        path: build/libs/HexedPlugin_pub.jar
 
     - name: Create Release
       if: strategy.job-index == 0
