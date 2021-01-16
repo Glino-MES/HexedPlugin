@@ -47,4 +47,5 @@ jobs:
         artifacts: build/libs/*.jar # optional, default is     
         # Optionally marks this release as a draft release. Set to true to enable.
         draft: false # optional, default is   
+        tag: ${{ github.run_number }}
         token: ${{ secrets.GITHUB_TOKEN }}
