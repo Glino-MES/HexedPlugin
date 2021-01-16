@@ -44,7 +44,7 @@ jobs:
         # An optional flag which indicates if we should update a release if it already exists. Defaults to false.
         #allowUpdates: # optional, default is 
         # An optional set of paths representing artifacts to upload to the release. This may be a single path or a comma delimited list of paths (or globs)
-        artifact: build/libs/*.jar # optional, default is     
+        artifacts: build/libs/*.jar # optional, default is     
         # Optionally marks this release as a draft release. Set to true to enable.
         draft: false # optional, default is   
         token: ${{ secrets.GITHUB_TOKEN }}
