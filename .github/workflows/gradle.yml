@@ -21,7 +21,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: HexedPlugin_pub.jar
-        path: build/libs/HexedPlugin_pub.jar
+        path: build/libs/*.jar
 
     - name: Create Release
       if: strategy.job-index == 0
