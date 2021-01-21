@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 public class webhookHandler {
     public static void sendHexEndGame(String hexURL, Net net, String msg) {
         JSONObject reportJO = new JSONObject();
-        reportJO.put("content","In:"+ Strings.stripColors(Core.settings.getString("servername"))+"\n"+msg);
+        reportJO.put("content","Final scores in "+ Strings.stripColors(Core.settings.getString("servername"))+"\n"+msg);
         Net.HttpRequest request = (new Net.HttpRequest())
                 .method(Net.HttpMethod.POST).header("Content-Type", "application/json")
                 .content(reportJO.toJSONString()).url(hexURL);

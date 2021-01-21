@@ -312,17 +312,23 @@ public class HexedMod extends Plugin{
         restarting = true;
         Seq<Player> players = data.getLeaderboard();
         StringBuilder builder = new StringBuilder();
+        StringBuilder webhookbuilder = new StringBuilder();
         for(int i = 0; i < players.size && i < 3; i++){
             if(data.getControlled(players.get(i)).size > 1){
                 builder.append("[yellow]").append(i + 1).append(".[accent] ").append(players.get(i).name)
                 .append("[lightgray] (x").append(data.getControlled(players.get(i)).size).append(")[]\n");
             }
         }
+        for(int i = 0; i < players.size ; i++){
+            if(data.getControlled(players.get(i)).size >= 1){
+                webhookbuilder.append(i + 1).append(". ").append(players.get(i).name)
+                        .append(" (x").append(data.getControlled(players.get(i)).size).append(i==0?") <WINNER>":")").append("\n");
+            }
+        }
 
         if(!players.isEmpty()){
             boolean dominated = data.getControlled(players.first()).size == data.hexes().size;
-            String msg = players.first().name+" **WON** with "+data.getControlled(players.first()).size+" hexes.\n"+
-                    (dominated ? "" : "\n\nFinal scores:\n" + builder);
+            String msg =  "```css\n"+ webhookbuilder+"```";
             webhookHandler.sendHexEndGame(hexURL,net,msg);
             for(Player player : Groups.player){
                 Call.infoMessage(player.con, "[accent]--ROUND OVER--\n\n[lightgray]"
