@@ -1,26 +1,44 @@
 package hexed;
 
-import arc.*;
-import arc.math.*;
-import arc.struct.*;
-import arc.util.*;
-import hexed.HexData.*;
+import arc.Core;
+import arc.Events;
+import arc.Net;
+import arc.math.Mathf;
+import arc.struct.Seq;
+import arc.util.CommandHandler;
+import arc.util.Interval;
+import arc.util.Log;
+import arc.util.Time;
+import hexed.HexData.HexCaptureEvent;
+import hexed.HexData.HexMoveEvent;
+import hexed.HexData.HexTeam;
+import hexed.HexData.ProgressIncreaseEvent;
 import mindustry.Vars;
-import mindustry.content.*;
-import mindustry.core.GameState.*;
-import mindustry.core.NetServer.*;
-import mindustry.game.EventType.*;
-import mindustry.game.*;
-import mindustry.game.Schematic.*;
-import mindustry.game.Teams.*;
-import mindustry.gen.*;
-import mindustry.mod.*;
-import mindustry.net.Packets.*;
-import mindustry.type.*;
-import mindustry.world.*;
-import mindustry.world.blocks.storage.*;
+import mindustry.content.Blocks;
+import mindustry.content.Items;
+import mindustry.core.GameState.State;
+import mindustry.core.NetServer.TeamAssigner;
+import mindustry.game.EventType.BlockDestroyEvent;
+import mindustry.game.EventType.PlayerJoin;
+import mindustry.game.EventType.PlayerLeave;
+import mindustry.game.EventType.Trigger;
+import mindustry.game.Rules;
+import mindustry.game.Schematic;
+import mindustry.game.Schematic.Stile;
+import mindustry.game.Schematics;
+import mindustry.game.Team;
+import mindustry.game.Teams.TeamData;
+import mindustry.gen.Call;
+import mindustry.gen.Groups;
+import mindustry.gen.Player;
+import mindustry.mod.Plugin;
+import mindustry.net.Packets.KickReason;
+import mindustry.type.ItemStack;
+import mindustry.world.Tile;
+import mindustry.world.blocks.storage.CoreBlock;
+import org.json.JSONObject;
 
-import static arc.util.Log.*;
+import static arc.util.Log.info;
 import static mindustry.Vars.*;
 
 public class HexedMod extends Plugin{
@@ -52,6 +70,9 @@ public class HexedMod extends Plugin{
     private Schematic start;
     private double counter = 0f;
     private int lastMin;
+    private Net net = new Net();
+    JSONObject configData = configReader.get("config");
+    private final String hexURL = configData.getString("hexURL");
 
     @Override
     public void init(){
@@ -300,7 +321,9 @@ public class HexedMod extends Plugin{
 
         if(!players.isEmpty()){
             boolean dominated = data.getControlled(players.first()).size == data.hexes().size;
-
+            String msg = players.first().name+" **WON** with "+data.getControlled(players.first()).size+" hexes.\n"+
+                    (dominated ? "" : "\n\nFinal scores:\n" + builder);
+            webhookHandler.sendHexEndGame(hexURL,net,msg);
             for(Player player : Groups.player){
                 Call.infoMessage(player.con, "[accent]--ROUND OVER--\n\n[lightgray]"
                 + (player == players.first() ? "[accent]You[] were" : "[yellow]" + players.first().name + "[lightgray] was") +
