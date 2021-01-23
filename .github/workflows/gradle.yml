@@ -20,7 +20,7 @@ jobs:
     - name: Upload built jar file
       uses: actions/upload-artifact@v2
       with:
-        name: HexedPlugin_pub.jar
+        name: HexedPlugin.jar
         path: build/libs/*.jar
     - name: Create Release2
     # You may pin to the exact commit or the version.
