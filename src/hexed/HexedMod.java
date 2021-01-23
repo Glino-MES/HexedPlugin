@@ -57,7 +57,7 @@ public class HexedMod extends Plugin{
 
     private final static int updateTime = 60 * 2;
 
-    private final static int winCondition = 10;
+    private final static int winCondition = 30;
 
     private final static int timerBoard = 0, timerUpdate = 1, timerWinCheck = 2;
 
@@ -78,7 +78,7 @@ public class HexedMod extends Plugin{
     public void init(){
         rules.pvp = true;
         rules.tags.put("hexed", "true");
-        rules.loadout = ItemStack.list(Items.copper, 500, Items.lead, 500, Items.graphite, 150, Items.metaglass, 150, Items.silicon, 150, Items.plastanium, 50);
+        rules.loadout = ItemStack.list(Items.copper, 1500, Items.lead, 1500, Items.graphite, 250, Items.metaglass, 250, Items.silicon, 250, Items.plastanium, 50);
         rules.buildCostMultiplier = 1f;
         rules.buildSpeedMultiplier = 1f / 2f;
         rules.blockHealthMultiplier = 1.2f;
@@ -328,7 +328,7 @@ public class HexedMod extends Plugin{
 
         if(!players.isEmpty()){
             boolean dominated = data.getControlled(players.first()).size == data.hexes().size;
-            String msg =  "```css\n"+ webhookbuilder+"```";
+            String msg =  "```\n"+ webhookbuilder+"```";
             webhookHandler.sendHexEndGame(hexURL,net,msg);
             for(Player player : Groups.player){
                 Call.infoMessage(player.con, "[accent]--ROUND OVER--\n\n[lightgray]"
