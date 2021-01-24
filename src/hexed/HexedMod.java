@@ -340,7 +340,7 @@ public class HexedMod extends Plugin{
         Log.info("&ly--SERVER RESTARTING--");
         Time.runTask(60f * 10f, () -> {
             netServer.kickAll(KickReason.serverRestarting);
-            Time.runTask(5f, () -> System.exit(2));
+            Time.runTask(10f, () -> System.exit(2));
         });
     }
 
