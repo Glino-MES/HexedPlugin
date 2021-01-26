@@ -320,10 +320,11 @@ public class HexedMod extends Plugin{
             }
         }
         for(int i = 0; i < players.size ; i++){
-            if(data.getControlled(players.get(i)).size >= 1){
-                webhookbuilder.append(i + 1).append(". ").append(players.get(i).name)
-                        .append(" (x").append(data.getControlled(players.get(i)).size).append(i==0?") <WINNER>":")").append("\n");
-            }
+                if(data.getControlled(players.get(i)).size >= 1){
+                    webhookbuilder.append(i + 1).append(". ").append(players.get(i).name)
+                            .append(" (x").append(data.getControlled(players.get(i)).size)
+                            .append(((i==0) && (data.getControlled(players.get(i)).size > 1)) ?") <WINNER>": (data.getControlled(players.get(0)).size == 1)? ") <TIE>":")").append("\n");
+                }
         }
 
         if(!players.isEmpty()){
