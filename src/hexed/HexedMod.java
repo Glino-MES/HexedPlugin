@@ -98,7 +98,7 @@ public class HexedMod extends Plugin{
                         player.clearUnit();
                         killTiles(player.team());
                         Call.sendMessage("[yellow](!)[] [accent]" + player.name + "[lightgray] has been eliminated![yellow] (!)");
-                        Call.infoMessage(player.con, "Your cores have been destroyed. You are defeated.");
+                        Call.infoMessage(player.con, "Your cores has been destroyed. You are defeated.");
                         player.team(Team.derelict);
                     }
 
@@ -234,7 +234,7 @@ public class HexedMod extends Plugin{
     public void registerServerCommands(CommandHandler handler){
         handler.register("hexed", "Begin hosting with the Hexed gamemode.", args -> {
             if(!state.is(State.menu)){
-                Log.err("Stop the server first.");
+                Log.err("You need to stop the server first.");
                 return;
             }
 
@@ -245,7 +245,7 @@ public class HexedMod extends Plugin{
             HexedGenerator generator = new HexedGenerator();
             world.loadGenerator(Hex.size, Hex.size, generator);
             data.initHexes(generator.getHex());
-            info("Map generated.");
+            info("Map has been generated.");
             state.rules = rules.copy();
             logic.play();
             netServer.openServer();
@@ -373,7 +373,7 @@ public class HexedMod extends Plugin{
 
     void loadout(Player player, int x, int y){
         Stile coreTile = start.tiles.find(s -> s.block instanceof CoreBlock);
-        if(coreTile == null) throw new IllegalArgumentException("Schematic has no core tile. Exiting.");
+        if(coreTile == null) throw new IllegalArgumentException("Schematics don't have core tiles. Exiting.");
         int ox = x - coreTile.x, oy = y - coreTile.y;
         start.tiles.each(st -> {
             Tile tile = world.tile(st.x + ox, st.y + oy);
