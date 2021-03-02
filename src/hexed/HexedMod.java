@@ -81,10 +81,10 @@ public class HexedMod extends Plugin{
         rules.loadout = ItemStack.list(Items.copper, 1500, Items.lead, 1500, Items.graphite, 250, Items.metaglass, 250, Items.silicon, 250, Items.plastanium, 50);
         rules.buildCostMultiplier = 1f;
         rules.buildSpeedMultiplier = 1f / 2f;
-        rules.blockHealthMultiplier = 1.2f;
+        rules.blockHealthMultiplier = 1.5f;
         rules.unitBuildSpeedMultiplier = 1f;
         rules.enemyCoreBuildRadius = (Hex.diameter - 1) * tilesize / 2f;
-        rules.unitDamageMultiplier = 1.1f;
+        rules.unitDamageMultiplier = 1.25f;
         rules.canGameOver = false;
         start = Schematics.readBase64("bXNjaAF4nFWSXW6kMBCE2zZgG8j+aC+QC/CSi+wZHMZaITH2CJhEOXnewnZ15yEZifmwu6rcNNBAPy01JV0zdc9pz49PNFzyPm/L7VhqIXqgP8dypLLcr9NrWtdpTdu/TA/fNinMtbzkt7qRS9tMv271NW9TqZf8qR/2yjfTLZW80rjlW1p4VZdykN/ndBx5o3GuW57KfV7zfaffXxyfId01lwsLw72sNeHOP4v1jYj+8kWGrGE4slg1ZMGOZOkVgeQXVTmocsQKa+sYjpxliM+oz8CH2kAOyh8wwGobVINjmWVBPE/qTSv3rmM0KmzRitVIq5EWkahxKzD3aMRqK1YPcNhpEUUOaMgFjvIkTYqkgSQin2zPq4bMwH99yxqD/ZHJGyJuIR4ZHAT0eJhWax1qA6OBlUsdXwb7UvbSHMOgW4/W0EiPxjym0jBGnoM9z/Pj/GC+G9jEjaELZA6BQwVeEbTGc+gYfGrLkEEHtUc9POJwnrEMhCHvN2pY1LCIMNSiKgdVjpoiYT0+DysPKPCKoDX+IP4DZRpQpQ==");
 
@@ -117,6 +117,7 @@ public class HexedMod extends Plugin{
 
                 if(interval.get(timerBoard, leaderboardTime)){
                     Call.infoToast(getLeaderboard(), 15f);
+                    rules.loadout.each(e => e.amount *= 1.075);//every 2 minutes increases starting res by 7.5%
                 }
 
                 if(interval.get(timerUpdate, updateTime)){
