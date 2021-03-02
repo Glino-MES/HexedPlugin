@@ -51,7 +51,7 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 40;
+    private final static int roundTime = 60 * 60 * 60;
     //in ticks: 3 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
@@ -98,7 +98,7 @@ public class HexedMod extends Plugin{
                         player.clearUnit();
                         killTiles(player.team());
                         Call.sendMessage("[yellow](!)[] [accent]" + player.name + "[lightgray] has been eliminated![yellow] (!)");
-                        Call.infoMessage(player.con, "Your cores has been destroyed. You are defeated.");
+                        Call.infoMessage(player.con, "Your cores have been destroyed. You are defeated.");
                         player.team(Team.derelict);
                     }
 
