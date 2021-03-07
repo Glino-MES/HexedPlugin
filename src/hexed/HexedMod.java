@@ -51,7 +51,8 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 60;
+    private final static int roundTimeMins = 50;
+    private final static int roundTime = 60 * 60 * roundTimeMins;
     //in ticks: 3 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
@@ -67,9 +68,9 @@ public class HexedMod extends Plugin{
     private HexData data;
     private boolean restarting = false, registered = false;
 
-    private Schematic start;
+    private Schematic start1,midgamestart;
     private double counter = 0f;
-    private int lastMin;
+    private int lastMin = roundTimeMins;
     private Net net = new Net();
     JSONObject configData = configReader.get("config");
     private final String hexURL = configData.getString("hexURL");
@@ -78,7 +79,7 @@ public class HexedMod extends Plugin{
     public void init(){
         rules.pvp = true;
         rules.tags.put("hexed", "true");
-        rules.loadout = ItemStack.list(Items.copper, 1500, Items.lead, 1500, Items.graphite, 250, Items.metaglass, 250, Items.silicon, 250, Items.plastanium, 50);
+        rules.loadout = ItemStack.list(Items.copper, 1500, Items.lead, 1500, Items.graphite, 250, Items.metaglass, 250, Items.silicon, 250, Items.thorium,50,Items.plastanium, 50,Items.titanium, 150,Items.surgeAlloy,5,Items.phaseFabric,20);
         rules.buildCostMultiplier = 1f;
         rules.buildSpeedMultiplier = 1f / 2f;
         rules.blockHealthMultiplier = 1.5f;
@@ -86,11 +87,11 @@ public class HexedMod extends Plugin{
         rules.enemyCoreBuildRadius = (Hex.diameter - 1) * tilesize / 2f;
         rules.unitDamageMultiplier = 1.25f;
         rules.canGameOver = false;
-        start = Schematics.readBase64("bXNjaAF4nFWSXW6kMBCE2zZgG8j+aC+QC/CSi+wZHMZaITH2CJhEOXnewnZ15yEZifmwu6rcNNBAPy01JV0zdc9pz49PNFzyPm/L7VhqIXqgP8dypLLcr9NrWtdpTdu/TA/fNinMtbzkt7qRS9tMv271NW9TqZf8qR/2yjfTLZW80rjlW1p4VZdykN/ndBx5o3GuW57KfV7zfaffXxyfId01lwsLw72sNeHOP4v1jYj+8kWGrGE4slg1ZMGOZOkVgeQXVTmocsQKa+sYjpxliM+oz8CH2kAOyh8wwGobVINjmWVBPE/qTSv3rmM0KmzRitVIq5EWkahxKzD3aMRqK1YPcNhpEUUOaMgFjvIkTYqkgSQin2zPq4bMwH99yxqD/ZHJGyJuIR4ZHAT0eJhWax1qA6OBlUsdXwb7UvbSHMOgW4/W0EiPxjym0jBGnoM9z/Pj/GC+G9jEjaELZA6BQwVeEbTGc+gYfGrLkEEHtUc9POJwnrEMhCHvN2pY1LCIMNSiKgdVjpoiYT0+DysPKPCKoDX+IP4DZRpQpQ==");
-
+        start1 = Schematics.readBase64("bXNjaAF4nFWSXW6kMBCE2zZgG8j+aC+QC/CSi+wZHMZaITH2CJhEOXnewnZ15yEZifmwu6rcNNBAPy01JV0zdc9pz49PNFzyPm/L7VhqIXqgP8dypLLcr9NrWtdpTdu/TA/fNinMtbzkt7qRS9tMv271NW9TqZf8qR/2yjfTLZW80rjlW1p4VZdykN/ndBx5o3GuW57KfV7zfaffXxyfId01lwsLw72sNeHOP4v1jYj+8kWGrGE4slg1ZMGOZOkVgeQXVTmocsQKa+sYjpxliM+oz8CH2kAOyh8wwGobVINjmWVBPE/qTSv3rmM0KmzRitVIq5EWkahxKzD3aMRqK1YPcNhpEUUOaMgFjvIkTYqkgSQin2zPq4bMwH99yxqD/ZHJGyJuIR4ZHAT0eJhWax1qA6OBlUsdXwb7UvbSHMOgW4/W0EiPxjym0jBGnoM9z/Pj/GC+G9jEjaELZA6BQwVeEbTGc+gYfGrLkEEHtUc9POJwnrEMhCHvN2pY1LCIMNSiKgdVjpoiYT0+DysPKPCKoDX+IP4DZRpQpQ==");
+        midgamestart =Schematics.readBase64("bXNjaAF4nE2Ra27CMBCEN05InAe09AS9QM7SM5hg0UjBRiYUcfH+LN3JgESkZLz2zpfdtbTyZqQI7uil27mz/zyO+wOidu/PQxpP8xiDyFq6+Tum8XLsr26a5OM16ieXDl628zi7gM0hhh9/i0lylwaphtswxeDl/RSvPvUh7v3D0p6jLvqTC36SLvmTGzWKY5ilG2LyfbgMk7+cZfuS+PCWRx/2Pom9hCk6rKqdm2efbiLyJXyyx6tPzlUhYlRKSkWxTKmZ21BaSicZdP3EKSjDa1QWSkZKRkoGSqFxiwhwWeHULqa81LVqpVKgJKOn+jFEGaIMUUZRJlNZP+pH2TnskEKZaq6ETaF6/ChvNFJ0q58GbIP9jlkblrN0tQIBsrS74lnJxkspYFVWqcc59jfCRoGx3KpgheikUEhns/vf/TfHWBeaZXNWcw2koliMxaK5SqUBynLalr+pn9ex4hAWe017DTtSaoykhg9RR8OG92coOaWgLLCGsIawhrU0SllE7f9tPU+n");
         Events.run(Trigger.update, () -> {
             if(active()){
-                Vars.state.rules.modeName = "Hex";
+
                 data.updateStats();
 
                 for(Player player : Groups.player){
@@ -117,10 +118,12 @@ public class HexedMod extends Plugin{
 
                 if(interval.get(timerBoard, leaderboardTime)){
                     Call.infoToast(getLeaderboard(), 15f);
-                    rules.loadout.each(e => e.amount *= 1.075);//every 2 minutes increases starting res by 7.5%
+                    //Call.infoPopup(p.con, "[accent][green]Register[] NOW to [green]save[] the EXP", 6f, 18, 230, 0, 10, 10);
                 }
 
                 if(interval.get(timerUpdate, updateTime)){
+                    Vars.state.rules.modeName = "Hex";
+                    //rules.loadout.each(e -> e.amount = (int) (e.amount*1.1));//every 2 minutes increases starting res by 7.5%
                     data.updateControl();
                 }
 
@@ -228,7 +231,7 @@ public class HexedMod extends Plugin{
             message.append("<Unknown>");
         }
 
-        Call.setHudText(player.con, message.toString());
+        Call.setHudText(player.con, "\n\n\n"+message.toString()); // todo neeed to change this
     }
 
     @Override
@@ -373,9 +376,19 @@ public class HexedMod extends Plugin{
     }
 
     void loadout(Player player, int x, int y){
+        boolean midgame = false;
+        if (lastMin <= roundTimeMins/2){
+            midgame=true;
+        }
+        Schematic start = start1;
+        if (midgame){
+            start = midgamestart;
+        }
         Stile coreTile = start.tiles.find(s -> s.block instanceof CoreBlock);
         if(coreTile == null) throw new IllegalArgumentException("Schematics don't have core tiles. Exiting.");
         int ox = x - coreTile.x, oy = y - coreTile.y;
+
+        boolean finalMidgame = midgame;
         start.tiles.each(st -> {
             Tile tile = world.tile(st.x + ox, st.y + oy);
             if(tile == null) return;
@@ -389,9 +402,14 @@ public class HexedMod extends Plugin{
             if(st.config != null){
                 tile.build.configureAny(st.config);
             }
+
             if(tile.block() instanceof CoreBlock){
                 for(ItemStack stack : state.rules.loadout){
-                    Call.setItem(tile.build, stack.item, stack.amount);
+                    int amount = (int) (((double)stack.amount)*( 1. + ((double) roundTimeMins-(double)lastMin)/15. ));
+                    if (finalMidgame){
+                        amount += 400;
+                    }
+                    Call.setItem(tile.build, stack.item, amount);
                 }
             }
         });
